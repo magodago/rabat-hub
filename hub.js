@@ -1,25 +1,13 @@
-const rev = document.querySelectorAll('.reveal');
-rev.forEach((el, i) => setTimeout(() => el.classList.add('in'), 90 + i * 110));
-
-const glow = document.getElementById('glow');
-let raf = null, px = 0, py = 0;
-window.addEventListener('pointermove', e => {
-  px = e.clientX; py = e.clientY;
-  glow.style.opacity = '.9';
-  if (raf) return;
-  raf = requestAnimationFrame(() => {
-    glow.style.left = px + 'px'; glow.style.top = py + 'px'; raf = null;
+const pv = document.getElementById('pv'), pvimg = document.getElementById('pvimg');
+let raf = null, tx = 0, ty = 0;
+function paint(){ pv.style.transform = `translate3d(${tx - 165}px,${ty - 250}px,0) scale(1) rotate(-4deg)`; raf = null; }
+document.querySelectorAll('.door').forEach(d => {
+  d.addEventListener('mouseenter', e => {
+    pvimg.src = d.dataset.pv; pv.classList.add('on'); tx = e.clientX; ty = e.clientY; paint();
   });
+  d.addEventListener('mousemove', e => {
+    tx = e.clientX; ty = e.clientY;
+    if (!raf) raf = requestAnimationFrame(paint);
+  });
+  d.addEventListener('mouseleave', () => pv.classList.remove('on'));
 });
-window.addEventListener('pointerleave', () => glow.style.opacity = '0');
-if (matchMedia('(hover:hover)').matches && !matchMedia('(prefers-reduced-motion:reduce)').matches) {
-  document.querySelectorAll('.card').forEach(c => {
-    c.addEventListener('pointermove', e => {
-      const r = c.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
-      c.style.transform = `translateY(-6px) rotateX(${(-y * 5).toFixed(2)}deg) rotateY(${(x * 6).toFixed(2)}deg)`;
-      c.style.setProperty('--mx', (x * 100 + 50) + '%');
-    });
-    c.addEventListener('pointerleave', () => { c.style.transform = ''; });
-  });
-}
