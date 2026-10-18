@@ -116,3 +116,39 @@ img{display:block;max-width:100%}
 .claim{font-size:clamp(15px,1.15vw,17px);letter-spacing:.06em;font-weight:400;color:rgba(242,240,234,.92);line-height:1.5}
 .pv{width:330px;height:210px;transform:translate(-50%,-118%) rotate(-3deg) scale(.97)}
 .pv.on{transform:translate(-50%,-118%) rotate(-2deg) scale(1)}
+.hero-grid{grid-template-columns:1fr}
+.hl1{color:var(--blue);text-shadow:0 0 60px rgba(31,79,232,.35)}
+.hl1{animation:rise .95s cubic-bezier(.2,.8,.2,1) .05s forwards, glow 6s ease-in-out 1.2s infinite}
+@keyframes glow{0%,100%{text-shadow:0 0 50px rgba(31,79,232,.25)}50%{text-shadow:0 0 80px rgba(31,79,232,.5)}}
+.eq{position:relative;margin:30px 0 8px;height:92px;display:flex;align-items:flex-end}
+.eq-in{display:flex;align-items:flex-end;gap:4px;width:100%;height:78px}
+.eq-in i{flex:1;display:block;height:100%;border-radius:2px 2px 0 0;transform-origin:bottom;
+ height:calc(var(--h) * 100%);background:linear-gradient(180deg,var(--blue),rgba(31,79,232,.18));
+ animation:eq 1.5s ease-in-out infinite alternate;animation-delay:calc(var(--d) * -6)}
+.eq-in i[style*="y"]{background:linear-gradient(180deg,#F9FF00,rgba(249,255,0,.18))}
+@keyframes eq{from{transform:scaleY(.25);opacity:.55}to{transform:scaleY(1);opacity:1}}
+.eq-base{position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--line)}
+@media(max-width:700px){.eq{height:64px;margin:18px 0 4px}.eq-in{height:54px;gap:2.5px}}
+.door{grid-template-columns:74px minmax(0,1.1fr) 104px minmax(0,.8fr) 56px}
+.tag{grid-column:3;justify-self:start;align-self:center}
+.dd{grid-column:4;text-align:left;font-size:13px;max-width:34ch}
+.go{grid-column:5}
+.eq{height:104px}
+.eq-in{height:96px;gap:6px}
+.eq-in i{border-radius:3px 3px 0 0;background:linear-gradient(180deg,#3D6BFF 0%,#1F4FE8 55%,rgba(31,79,232,.25) 100%);
+ box-shadow:0 0 18px rgba(31,79,232,.45)}
+.eq-in i[style*="y"]{background:linear-gradient(180deg,#F9FF00,#C9CF00 70%,rgba(249,255,0,.25));
+ box-shadow:0 0 20px rgba(249,255,0,.45)}
+@media(max-width:700px){
+ .hl2{margin-top:6px}
+ .eq{height:70px;margin-top:16px}
+ .eq-in{height:62px;gap:3px}
+ .eq-in i:nth-child(n+23){display:none}
+ .door{grid-template-columns:30px minmax(0,1fr) 40px;grid-template-areas:"idx dt go" ". dd .";
+  row-gap:10px;padding:22px 0;align-items:start}
+ .idx{grid-area:idx;padding-top:8px}
+ .dt{grid-area:dt;font-size:32px;line-height:1.02}
+ .dd{grid-area:dd;max-width:100%;text-align:left;font-size:12.5px}
+ .go{grid-area:go}
+ .tag{display:none}
+}
