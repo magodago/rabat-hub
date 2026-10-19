@@ -153,65 +153,22 @@ img{display:block;max-width:100%}
  .tag{display:none}
 }
 
-/* Onda musical en cada puerta (sustituye a la descripción) */
-.door{grid-template-columns:74px minmax(0,1.05fr) 96px minmax(150px,.9fr) 56px}
-.wv{grid-column:4;display:flex;align-items:flex-end;gap:4px;height:34px;
- opacity:.28;transition:opacity .5s ease,filter .5s ease}
-.wv i{flex:1;height:calc(var(--h) * 100%);min-height:3px;border-radius:1px;
- background:linear-gradient(180deg,#3D6BFF 0%,#1F4FE8 60%,rgba(31,79,232,.12) 100%);
- transform-origin:bottom;animation:wv 1.6s ease-in-out infinite alternate;
- animation-delay:calc(var(--d) * -1s)}
-.wv i[data-y]{background:linear-gradient(180deg,#F9FF00 0%,#C9CF00 65%,rgba(249,255,0,.12) 100%)}
-@keyframes wv{from{transform:scaleY(.3)}to{transform:scaleY(1)}}
-.door:hover .wv{opacity:1;filter:drop-shadow(0 0 12px rgba(47,91,255,.55))}
-.door:hover .wv i{animation-duration:.9s}
+/* Degradado que respira: brillo azul desde el borde derecho, sin barras ni barridos */
+.door{position:relative;overflow:hidden}
+.door::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+ background:
+  linear-gradient(270deg,rgba(31,79,232,.55) 0%,rgba(31,79,232,.22) 26%,rgba(31,79,232,0) 62%),
+  linear-gradient(270deg,rgba(249,255,0,.16) 0%,rgba(249,255,0,0) 14%);
+ opacity:.26;animation:respira 6.5s ease-in-out infinite;
+ -webkit-mask-image:linear-gradient(90deg,transparent 30%,#000 78%);
+ mask-image:linear-gradient(90deg,transparent 30%,#000 78%)}
+@keyframes respira{
+ 0%,100%{opacity:.2}
+ 50%{opacity:.55}}
+.door:hover::before{opacity:.8;animation-duration:4s}
+.door>*{position:relative;z-index:1}
 @media(max-width:700px){
- .door{grid-template-columns:30px minmax(0,1fr) 40px;grid-template-areas:"idx dt go" ". wv .";
-  row-gap:12px;padding:20px 0;align-items:start}
- .wv{grid-area:wv;height:22px;gap:3px;opacity:.42;max-width:210px}
- .dt{font-size:30px}
+ .door::before{-webkit-mask-image:linear-gradient(90deg,transparent 34%,#000 88%);mask-image:linear-gradient(90deg,transparent 34%,#000 88%);
+  animation-name:respira_movil}
 }
-@media(prefers-reduced-motion:reduce){
- .wv i{animation:none}
- .wv{opacity:.5}
-}
-
-/* Ajuste fino: sin etiqueta, onda estrecha tipo medidor de estudio */
-.door{grid-template-columns:74px minmax(0,1fr) 168px 56px;gap:22px}
-.wv{grid-column:3;justify-self:end;display:flex;align-items:flex-end;justify-content:flex-end;
- gap:4px;height:44px;width:168px;opacity:.3;transition:opacity .5s ease,filter .5s ease}
-.wv i{flex:0 0 3px;width:3px;min-height:3px;height:calc(var(--h) * 100%);border-radius:2px;
- background:linear-gradient(180deg,#4F79FF 0%,#1F4FE8 70%,rgba(31,79,232,.25) 100%);
- transform-origin:bottom;animation:wv 1.5s ease-in-out infinite alternate;
- animation-delay:calc(var(--d) * -1s)}
-.wv i[data-y]{background:linear-gradient(180deg,#F9FF00 0%,#C9CF00 70%,rgba(249,255,0,.25) 100%)}
-.door:hover .wv{opacity:1;filter:drop-shadow(0 0 10px rgba(47,91,255,.5))}
-.door:hover .wv i{animation-duration:.85s}
-.tag{display:none}
-@media(max-width:700px){
- .door{grid-template-columns:30px minmax(0,1fr) 40px;grid-template-areas:"idx dt go" ". wv .";gap:10px 12px}
- .wv{grid-area:wv;justify-self:start;width:150px;height:30px;gap:3px}
- .wv i{flex:0 0 2.5px;width:2.5px}
-}
-
-/* Onda más presente: lectura de medidor profesional */
-.wv{width:252px;height:56px;gap:5px;opacity:.55}
-.wv i{flex:0 0 4px;width:4px;min-height:2px}
-.door{grid-template-columns:74px minmax(0,1fr) 252px 56px}
-.door:hover .wv{opacity:1}
-@media(max-width:700px){
- .wv{width:100%;max-width:250px;height:38px;gap:4px;opacity:.6}
- .wv i{flex:1 1 0;width:auto;min-width:3px}
-}
-
-/* Móvil: puerta en dos filas, sin solapes */
-@media(max-width:700px){
- .door{grid-template-columns:24px minmax(0,1fr) 32px;
-  grid-template-areas:"idx dt go" "wv wv wv";
-  row-gap:14px;column-gap:10px;padding:20px 2px;align-items:start}
- .idx{grid-area:idx;padding-top:9px}
- .dt{grid-area:dt;font-size:27px;line-height:1.05}
- .go{grid-area:go;width:32px;height:32px;font-size:12px;justify-self:end;margin-top:4px}
- .wv{grid-area:wv;justify-self:stretch;width:100%;max-width:none;height:34px;gap:3px;opacity:.7}
- .wv i{flex:1 1 0;width:auto;min-width:3px}
-}
+@keyframes respira_movil{0%,100%{opacity:.14}50%{opacity:.34}}
